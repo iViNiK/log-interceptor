@@ -28,7 +28,6 @@ An example of configuration of the syslog appender that can be taken as a refere
 	  <facility>LOCAL0</facility>
 	  <port>514</port>
 	  <throwableExcluded>true</throwableExcluded>
-	<!--   <suffixPattern>gs-rest-service %m thread:%t priority:%p category:%c exception:%exception</suffixPattern> -->
 	  <suffixPattern>%d{yyyy-MM-dd HH:mm:ss.SSS,Europe/Rome} [%thread] %X{customData} %-5level %logger{36}%-40.40logger{39} - %msg%n</suffixPattern>  
   </appender>
 
@@ -37,7 +36,6 @@ An example of configuration of the syslog appender that can be taken as a refere
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
             	%d{yyyy-MM-dd HH:mm:ss.SSS,Europe/Rome} %highlight(%X{customData} %-5level) --- [%blue(%15.15t)] %cyan(%-40.40logger{39}) - %msg%n
-                <!-- %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable -->
             </Pattern>
         </layout>
     </appender>
@@ -48,7 +46,7 @@ An example of configuration of the syslog appender that can be taken as a refere
     </root>
  
     <!-- LOG "com.acme.referenceimplementation*" at TRACE level -->
-    <logger name="com.dxc.sgisanita.referenceimplementation" level="trace" additivity="false">
+    <logger name="com.acme.referenceimplementation" level="trace" additivity="false">
         <appender-ref ref="Console" />
     </logger>
  
