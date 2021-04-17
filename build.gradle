@@ -1,0 +1,71 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "http://repository.jboss.org/nexus/content/groups/public/"
+        }
+    }
+    dependencies {
+        classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
+    }
+}
+
+plugins {
+	id 'java'
+}
+
+apply plugin: 'maven-publish'
+
+ext {
+	springBootVersion = '2.1.10.RELEASE'
+	aspectjVersion = '1.8.13'
+	springCloudVersion = 'Finchley.RELEASE'
+	springVersion = '5.1.11.RELEASE'
+	logbackVersion = '1.2.3'
+	servletApiVersion = '3.1.0'
+	jacksonVersion = '2.9.5'
+	cxfVersion = '3.2.4'
+	noNilsWsdl2javaVersion = '0.10'
+}
+
+repositories{
+	mavenCentral()
+}
+
+group = 'it.vinicioflamini.sharedlib'
+version = '1.0.0-RELEASE'
+sourceCompatibility = 1.11
+
+dependencies {
+    // Load bill of materials (BOM) for Spring Boot.
+    // The dependencies in the BOM will be
+    // dependency constraints in our build.
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:$rootProject.ext.springBootVersion"))
+    compile "org.aspectj:aspectjweaver:$rootProject.ext.aspectjVersion"
+	compile "org.springframework.boot:spring-boot:$rootProject.ext.springBootVersion"
+	compile "org.springframework:spring-web:$rootProject.ext.springVersion"
+	compile "org.springframework:spring-context:$rootProject.ext.springVersion"
+	compile "ch.qos.logback:logback-classic:$rootProject.ext.logbackVersion"
+	compile "javax.servlet:javax.servlet-api:$rootProject.ext.servletApiVersion"
+
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+        }
+    }
+    
+    repositories {
+    	mavenLocal()
+    }
+}
+
+
